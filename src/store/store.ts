@@ -1,7 +1,9 @@
 import { Action, ThunkAction, configureStore } from '@reduxjs/toolkit';
 import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
+import dataSlice from './data-slice';
 export const store = configureStore({
     reducer: {
+        data: dataSlice
     },
 });
 
