@@ -1,0 +1,24 @@
+.question_block {
+    display: flex;
+    flex-direction: column;
+    font-family: NunitoSans;
+    margin-top: 45px;
+
+    h1 {
+        margin: 0;
+        font-size: 28px;
+        color: #F2F3F5;
+        text-align: center;
+        font-weight: 700;
+    }
+
+    p {
+        margin: 0;
+        font-family: NunitoSansRegular;
+        font-size: 17px;
+        color: #C4C8CC;
+        text-align: center;
+        font-weight: 400;
+        margin-top: 16px;
+    }
+}
