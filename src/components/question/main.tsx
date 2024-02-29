@@ -1,9 +1,13 @@
+import { variants_of_questions_type } from '@/store/data-slice'
 import s from './main.module.scss'
-const Question = () => {
+type propsType = { progress: string, variants_of_questions: variants_of_questions_type }
+const Question = ({ progress, variants_of_questions }: propsType) => {
+    const data = variants_of_questions.questions[parseInt(progress) - 1]
+
     return (
         <div className={s.question_block}>
-            <h1 >What gender do you identify with?</h1>
-            <p>Please share how do you identify yourself</p>
+            <h1 >{data.question}</h1>
+            <p>{data.description}</p>
         </div>
     )
 }
