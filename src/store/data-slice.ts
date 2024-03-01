@@ -26,6 +26,7 @@ type initialState = {
     data: dataType,
     status: string
     language: "English" | "French" | "German" | "Spanish"
+    loader: boolean
 }
 // Асинхронный thunk для чтения данных из базы данных
 export const fetchData = createAsyncThunk('data/fetchData', async () => {
@@ -45,8 +46,17 @@ const dataSlice = createSlice({
         },
         language: "English",
         status: 'idle',
+        loader: false
     } as initialState,
-    reducers: {},
+    reducers: {
+        changeLanguage(state, action) {
+            state.language = action.payload
+            localStorage.setItem('language', JSON.stringify(action.payload))
+        },
+        changeLoader(state, action) {
+            state.loader = action.payload
+        }
+    },
     extraReducers: (builder) => {
         builder
             .addCase(fetchData.pending, (state) => {
@@ -62,6 +72,6 @@ const dataSlice = createSlice({
             });
     },
 });
-
+export const { changeLanguage, changeLoader } = dataSlice.actions
 export default dataSlice.reducer;
 export const selectData = (state: RootState) => state.data.data;

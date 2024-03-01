@@ -1,0 +1,80 @@
+.email_block {
+    color: white;
+    font-family: AlbertSans;
+    text-align: center;
+    padding-top: 80px;
+
+    h1 {
+        margin: 0;
+    }
+
+    p {
+        margin: 0;
+        margin-top: 24px;
+    }
+
+    form {
+        box-sizing: border-box;
+
+
+        .btn {
+            position: absolute;
+            bottom: 20px;
+            left: 0;
+            right: 0;
+            cursor: pointer;
+            height: 56px;
+            border: none;
+            outline: none;
+            padding: 16px;
+            color: white;
+            font-size: 17px;
+            font-family: AlbertSans;
+            border-radius: 1000px;
+            background-color: #E4229C;
+            transition: 0.3s;
+        }
+
+        .btn_disabled {
+            opacity: 40%;
+            transition: 0.3s;
+            cursor: url('../../assets/cursor/cursor.png'), auto;
+        }
+
+        div {
+            text-align: start;
+            margin-top: 18px;
+            margin-left: 12px;
+            font-size: 13px;
+            color: rgb(252, 31, 31);
+        }
+
+        p {
+            margin: 0;
+            margin-top: 56px;
+            font-size: 12px;
+            font-weight: 500;
+            color: #B6B8C3;
+
+            a {
+                cursor: pointer;
+                color: #EB2F9A;
+                text-decoration: none;
+            }
+        }
+
+        input {
+            margin-top: 56px;
+            height: 76px;
+            padding: 20px;
+            background-color: #36173D;
+            box-sizing: border-box;
+            border-radius: 16px;
+            color: #C4C8CC80;
+            font-size: 17px;
+            outline: none;
+            border: none;
+            width: 100%;
+        }
+    }
+}

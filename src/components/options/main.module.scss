@@ -41,23 +41,19 @@
         .input {
             cursor: pointer;
 
-            div {
-                width: 24px;
-                height: 24px;
-                border: 1px solid #E4229B;
-                background-color: #6D4376;
-                border-radius: 8px;
-                transition: 0.3s;
-            }
+            width: 24px;
+            height: 24px;
+            border: 1px solid #E4229B;
+            background-color: #6D4376;
+            border-radius: 8px;
+            transition: 0.3s;
         }
 
         .checked_input {
-            div {
-                background-color: #E4229B;
-                transition: 0.3s;
-            }
+            background-color: #E4229B;
+            transition: 0.3s;
 
-            div::before {
+            &::before {
                 content: "\2713";
                 /* Unicode символ для галочки */
                 display: block;
@@ -126,8 +122,10 @@
 }
 
 .btn {
-    width: 100%;
-    margin-top: 28px;
+    position: absolute;
+    bottom: 20px;
+    left: 0;
+    right: 0;
     cursor: pointer;
     height: 56px;
     border: none;
@@ -153,10 +151,12 @@
     overflow-x: auto;
     list-style-type: none;
     font-family: NunitoSans;
-    height: 208px;
+    padding: 0;
     width: 130%;
     box-sizing: border-box;
-    transform: translateX(-30px);
+    transform: translateX(-40px);
+
+
 
     .circle_block {
         display: flex;
@@ -164,17 +164,44 @@
         flex-direction: column;
         margin-right: 12px;
 
+        &:nth-child(even) {
+            margin-top: 18px;
+        }
+
+        .selectCircle {
+            border: 2px solid #E4229B;
+        }
+
         .li_type_circle {
             display: flex;
+            flex-direction: column;
             justify-content: center;
             align-items: center;
+
+
             font-size: 13px;
             width: 88px;
             height: 88px;
-            background-color: #36173D;
-            color: #ffffff;
+
             border-radius: 1222px;
             text-align: center;
+
+            background-color: #36173D;
+            color: #ffffff;
+
+            user-select: none;
+            cursor: pointer;
+            box-sizing: border-box;
+
+            div {
+                font-size: 24px;
+                width: 25px;
+                height: 25px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                margin-bottom: 8px;
+            }
 
             &:last-child {
                 margin-top: 12px;
@@ -182,8 +209,4 @@
             }
         }
     }
-}
-
-.container {
-    position: relative;
 }

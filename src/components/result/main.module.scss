@@ -1,0 +1,30 @@
+.container_result {
+    color: white;
+    text-align: center;
+
+    h1 {
+        font-family: Niconne;
+        font-size: 36px;
+    }
+
+    .bottom_elements {
+        .btn {
+            position: absolute;
+            bottom: 20px;
+            left: 0;
+            right: 0;
+            cursor: pointer;
+            height: 56px;
+            border: none;
+            outline: none;
+            padding: 16px;
+            color: white;
+            font-size: 17px;
+            font-family: AlbertSans;
+            border-radius: 1000px;
+            background-color: #E4229C;
+            transition: 0.3s;
+        }
+    }
+
+}

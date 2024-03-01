@@ -2,8 +2,8 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import s from './global.module.scss';
 import { ReduxProvider } from "@/provider";
+import HeaderLine from "@/components/header_line/main";
 
-const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -15,12 +15,16 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+
+
   return (
     <html lang="en">
 
       <body className={s.body}>
         <ReduxProvider>
           <main className={s.main}>
+            <HeaderLine />
+
             {children}
           </main>
         </ReduxProvider>

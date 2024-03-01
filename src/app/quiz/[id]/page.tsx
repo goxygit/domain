@@ -1,16 +1,17 @@
 'use client'
-import { useRouter } from "next/router";
-import HeaderLine from "@/components/header_line/main";
 import Question from "@/components/question/main";
+import s from './page.module.scss'
 import Options from "@/components/options/main";
 import { useSelector } from "react-redux";
 import { RootState, useAppDispatch } from "@/store/store";
 import { useEffect, useState } from "react";
 import { fetchData } from "@/store/data-slice";
+import classNames from "classnames";
+import Loader from "@/components/options/loader/main";
 
 export default function QuizQuestionPage({ params }: { params: { id: string } }) {
     const [focusLanguage, setFocusLanguage] = useState(0)
-    const { language, data } = useSelector((state: RootState) => state.data)
+    const { language, data, loader } = useSelector((state: RootState) => state.data)
     const dispatch = useAppDispatch()
 
     useEffect(() => {
@@ -23,6 +24,8 @@ export default function QuizQuestionPage({ params }: { params: { id: string } })
             }
         }
         )
+        console.log(language)
+
     }, [language])
     const id = params.id
     // Здесь вы можете получить данные о вопросе с questionId 
@@ -32,14 +35,13 @@ export default function QuizQuestionPage({ params }: { params: { id: string } })
     };
 
     return (
-        <div>
-            {data.variants_of_questions ?
+        <div className={classNames({ [s.container]: loader })}>
+            {data.variants_of_questions && !loader ?
                 <>
-                    <HeaderLine progress={id} />
                     <Question variants_of_questions={data.variants_of_questions[focusLanguage]} progress={id} />
                     <Options variants_of_questions={data.variants_of_questions[focusLanguage].questions} progress={id} />
                 </>
-                : "lsad"
+                : loader && <Loader />
             }
 
         </div>
