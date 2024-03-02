@@ -18,7 +18,7 @@ const Email = () => {
         control,
         handleSubmit
     } = useForm({
-        mode: 'onBlur'
+        mode: 'onSubmit'
     })
 
     const { field, fieldState } = useController({
@@ -79,7 +79,7 @@ const Email = () => {
             <form onSubmit={handleSubmit(onSubmit)}>
                 <motion.input
                     variants={textAnimation} custom={3}
-                    className={classNames({ [s.invalid]: !isValid && fieldState.isTouched })} placeholder='Your email' {...register('Email', {
+                    className={classNames({ [s.invalid]: !isValid && errors?.Email })} placeholder='Your email' {...register('Email', {
                         required: "required",
                         pattern: {
                             value: /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/,

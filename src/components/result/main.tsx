@@ -42,7 +42,7 @@ const Result = () => {
             <motion.p variants={textAnimation} custom={2}>for supporting us and passing quiz</motion.p>
             <motion.img variants={textAnimation} custom={3} src={ok.src} alt="" />
             <motion.div variants={textAnimation} custom={4} className={s.bottom_elements}>
-                {/* <Download /> */}
+                <Download />
                 <button onClick={handleRetakeQuiz} className={classNames(s.btn)}>Retake quiz</button>
             </motion.div>
         </motion.div>

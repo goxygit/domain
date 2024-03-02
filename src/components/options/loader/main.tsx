@@ -13,7 +13,7 @@ const Loader = () => {
             router.push('/email')
             setTimeout(() => {
                 dispatch(changeLoader(false))
-            }, 500)
+            }, 1000)
         }, 6000)
     }, [])
     return (
