@@ -5,22 +5,35 @@ import classNames from 'classnames'
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { useAppDispatch } from '@/store/store'
+import StringType from './components/string-type'
+import CheckboxType from './components/checkbox-type'
+import StringAndEmoji from './components/sting-and-emoji'
+import CircleType from './components/circle-type'
 type propsType = { progress: string, variants_of_questions: questions_type[] }
-type selectedElType = {
+export type selectedElType = {
     text: string
     id: number
+}
+export type answerType = {
+    order: string,
+    title: string,
+    type: string,
+    answer: string | variants_type[],
 }
 const Options = ({ progress, variants_of_questions }: propsType) => {
     const [selectedIndices, setSelectedIndices] = useState<selectedElType[]>([]);
     const [selectedCircleIndices, setSelectedCircleIndices] = useState<selectedElType[]>([]);
     const router = useRouter()
     const dispatch = useAppDispatch()
+    const type = variants_of_questions[parseInt(progress) - 1].type
+    const variants = variants_of_questions[parseInt(progress) - 1]
+
     useEffect(() => {
         const existingAnswersString = localStorage.getItem('language');
         const existingAnswers = existingAnswersString ? JSON.parse(existingAnswersString) : []
         dispatch(changeLanguage(existingAnswers))
     }, [])
-    const type = variants_of_questions[parseInt(progress) - 1].type
+
     const handleChange = (text: string, func: (any: any) => void, select: selectedElType[]) => {
         const selectedIndex = select.findIndex(item => item.text === text);
         if (selectedIndex !== -1) {
@@ -38,7 +51,7 @@ const Options = ({ progress, variants_of_questions }: propsType) => {
     };
     const setAnswer = (el: variants_type | variants_type[]) => {
         console.log(el)
-        const currentAnswer = {
+        const currentAnswer: answerType = {
             order: progress, // Порядковый номер вопроса
             title: variants.question, // Заголовок вопроса
             type: variants.type, // Тип вопроса (например, multiple_choice, true_false и т. д.)
@@ -66,7 +79,6 @@ const Options = ({ progress, variants_of_questions }: propsType) => {
         }
         console.log(localStorage.getItem('quizAnswers'))
     }
-    const variants = variants_of_questions[parseInt(progress) - 1]
     return (
         <div className={s.container}>
             <ul className={classNames(
@@ -77,59 +89,23 @@ const Options = ({ progress, variants_of_questions }: propsType) => {
             >
                 {variants.variants.map((el, i) => (
                     type === "string" ?
-                        <li
-                            onClick={() => {
-                                // setAnswer((el as variants_type))
-                                // if (parseInt(progress) === 1) {
-                                //     dispatch(changeLanguage((el as variants_type).text))
-                                // }
-                                // router.push(`/quiz/${parseInt(progress) + 1}`)
-
-                                // localStorage.setItem('quizAnswers', '');
-                                // localStorage.setItem('language', '');
-                            }}
-                            key={i} className={s.li_type_text}>{(el as variants_type).text}</li>
+                        <StringType setAnswer={setAnswer} el={el as variants_type} progress={progress} i={i} />
                         : type === "string_and_emoji" ?
-                            <li
-                                onClick={() => {
-                                    setAnswer((el as variants_type))
-                                    router.push(`/quiz/${parseInt(progress) + 1}`)
-                                    // localStorage.setItem('quizAnswers', '');
-                                }}
-                                key={i} className={s.li_type_string_and_emoji}>
-                                <div>{(el as variants_type).emoji}</div>
-                                <span>
-                                    {(el as variants_type).text}
-                                </span>
-                            </li> :
+                            <StringAndEmoji setAnswer={setAnswer} el={el as variants_type} progress={progress} i={i} />
+                            :
                             type === "checkbox" ?
-                                <li
-                                    onClick={() => handleChange((el as variants_type).text, setSelectedIndices, selectedIndices)}
-                                    key={i} className={s.li_type_checkbox}>{(el as variants_type).text}
-                                    <div>
-                                        <div className={classNames(s.input, { [s.checked_input]: selectedIndices.some(item => item.text === (el as variants_type).text) })}></div>
-
-
-                                    </div></li>
+                                <CheckboxType handleChange={handleChange} i={i} el={el as variants_type} selectedIndices={selectedIndices} setSelectedIndices={selectedCircleIndices} />
                                 : type === "circle" ?
                                     <div key={i} className={s.circle_block}>
                                         {(el as variants_type[]).map((el, id) => (
-                                            < li
-                                                onClick={() => {
-                                                    if (selectedCircleIndices.findIndex(item => item.text === el.text) !== -1 || selectedCircleIndices.length !== 3)
-                                                        handleChange((el as variants_type).text, setSelectedCircleIndices, selectedCircleIndices)
-
-                                                }
-                                                }
-                                                key={id} className={classNames(s.li_type_circle, { [s.selectCircle]: selectedCircleIndices.findIndex(item => item.text === el.text) !== -1 })} >
-                                                <div>
-                                                    {el.emoji}
-                                                </div>{el.text}
-                                            </li>
+                                            <CircleType
+                                                handleChange={handleChange}
+                                                i={i} el={el as variants_type}
+                                                selectedCircleIndices={selectedCircleIndices}
+                                                setSelectedCircleIndices={setSelectedCircleIndices} />
 
                                         ))}
                                     </div>
-
                                     :
                                     ""
                 ))
@@ -147,12 +123,9 @@ const Options = ({ progress, variants_of_questions }: propsType) => {
             {
                 type === "circle" &&
                 <button onClick={() => {
-                    // setAnswer(selectedCircleIndices)
+                    setAnswer(selectedCircleIndices)
                     dispatch(changeLoader(true))
-                    // router.push(`/email`)
 
-                    // localStorage.setItem('quizAnswers', '');
-                    // localStorage.setItem('language', '');
                 }} disabled={selectedCircleIndices.length === 0} className={classNames(s.btn, { [s.btn_disabled]: selectedCircleIndices.length === 0 })}>Next</button>
             }
         </div >

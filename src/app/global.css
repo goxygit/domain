@@ -18,6 +18,8 @@
   src: url('../fonts/Niconne-Regular.ttf');
 }
 
+
+
 .main {
   position: relative;
   max-width: 320px;
@@ -33,4 +35,23 @@
   box-sizing: border-box;
   max-width: 100vw;
   overflow-x: hidden;
+}
+
+::-webkit-scrollbar {
+  height: 6px;
+  /* Ширина полосы прокрутки */
+  scrollbar-color: #ccc #f1f1f1;
+}
+
+/* Стилизация ползунка */
+::-webkit-scrollbar-thumb {
+  background-color: #ccc;
+  /* Цвет ползунка */
+  border-radius: 4px;
+  /* Скругление углов ползунка */
+}
+
+/* Стилизация трека (основания ползунка) */
+::-webkit-scrollbar-track {
+  opacity: 0;
 }

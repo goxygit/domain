@@ -57,7 +57,7 @@ const CircleLoader = () => {
                 fill="white"
                 fontSize="40"
                 fontFamily='AlbertSans'
-            >{progress} %</text>
+            >{Math.round(progress)} %</text>
         </svg>
     );
 };

@@ -145,16 +145,23 @@
     cursor: url('../../assets/cursor/cursor.png'), auto;
 }
 
+@media (min-width: 768px) {
+    .btn {
+        bottom: 180px;
+    }
+}
+
 .options_block_type_circle {
     position: relative;
     display: flex;
     overflow-x: auto;
     list-style-type: none;
     font-family: NunitoSans;
-    padding: 0;
+    padding: 12px 0;
     width: 130%;
     box-sizing: border-box;
     transform: translateX(-40px);
+
 
 
 

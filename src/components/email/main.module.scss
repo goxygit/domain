@@ -41,6 +41,12 @@
             cursor: url('../../assets/cursor/cursor.png'), auto;
         }
 
+        @media (min-width: 768px) {
+            .btn {
+                bottom: 240px;
+            }
+        }
+
         div {
             text-align: start;
             margin-top: 18px;
@@ -61,6 +67,12 @@
                 color: #EB2F9A;
                 text-decoration: none;
             }
+        }
+
+        .invalid {
+            border: 1px solid red;
+            color: rgb(252, 31, 31);
+            box-sizing: border-box;
         }
 
         input {

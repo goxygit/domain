@@ -1,18 +1,57 @@
 .container_result {
     color: white;
     text-align: center;
+    padding-top: 100px;
 
     h1 {
         font-family: Niconne;
         font-size: 36px;
+        margin: 0;
+        font-weight: normal;
+    }
+
+    p {
+        margin: 0;
+        margin-top: 12px;
+        font-family: AlbertSans;
+    }
+
+    img {
+        width: 118px;
+        height: 118px;
+        margin-top: 62px;
     }
 
     .bottom_elements {
+
+
+        position: absolute;
+        bottom: 20px;
+        left: 0;
+        right: 0;
+
+        div {
+            img {
+                width: 42px;
+                height: 42px;
+                margin: 0;
+                margin-right: 12px;
+            }
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: AlbertSans;
+            font-size: 17px;
+            cursor: pointer;
+        }
+
+
+
+
         .btn {
-            position: absolute;
-            bottom: 20px;
-            left: 0;
-            right: 0;
+            margin-top: 30px;
+            width: 100%;
             cursor: pointer;
             height: 56px;
             border: none;
@@ -25,6 +64,13 @@
             background-color: #E4229C;
             transition: 0.3s;
         }
+
+
     }
 
+    @media (min-width: 768px) {
+        .bottom_elements {
+            bottom: 180px;
+        }
+    }
 }

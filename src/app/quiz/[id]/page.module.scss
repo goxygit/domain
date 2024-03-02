@@ -1,4 +1,17 @@
 .container {
     display: flex;
     justify-content: center;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+}
+
+.img {
+    position: absolute;
+    top: 24px;
+    left: 0;
+    width: 24px;
+    height: 24px;
+    transform: rotate(90deg);
+    cursor: pointer;
 }

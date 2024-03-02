@@ -1,0 +1,15 @@
+div {
+    img {
+        width: 42px;
+        height: 42px;
+        margin: 0;
+        margin-right: 12px;
+    }
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: AlbertSans;
+    font-size: 17px;
+    cursor: pointer;
+}
