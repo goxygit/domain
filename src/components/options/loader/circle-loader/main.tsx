@@ -7,7 +7,7 @@ const CircleLoader = () => {
     useEffect(() => {
         const interval = setInterval(() => {
             // Увеличиваем прогресс каждую секунду
-            setProgress((prevProgress) => prevProgress + 0.5);
+            setProgress((prevProgress) => prevProgress + 1);
         }, 50);
 
         // Остановка интервала через 5 секунд
