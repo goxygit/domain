@@ -22,6 +22,19 @@ const Result = () => {
             transition: { delay: custom * 0.2 }
         })
     }
+    const handleRetakeQuiz = () => {
+        // Очистка localStorage при клике на кнопку
+        if (typeof window !== 'undefined') {
+            localStorage.setItem('quizAnswers', '');
+            localStorage.setItem('language', '');
+        }
+
+        dispatch(changeLoader(false));
+
+        setTimeout(() => {
+            router.push(`/quiz/1`);
+        }, 500);
+    };
 
     return (
         <motion.div initial='hidden' whileInView='visible' className={s.container_result}>
@@ -29,16 +42,8 @@ const Result = () => {
             <motion.p variants={textAnimation} custom={2}>for supporting us and passing quiz</motion.p>
             <motion.img variants={textAnimation} custom={3} src={ok.src} alt="" />
             <motion.div variants={textAnimation} custom={4} className={s.bottom_elements}>
-                <Download />
-                <button onClick={() => {
-                    localStorage.setItem('quizAnswers', '');
-                    localStorage.setItem('language', '');
-                    dispatch(changeLoader(false))
-                    setTimeout(() => {
-                        router.push(`/quiz/1`)
-
-                    }, 500)
-                }} className={classNames(s.btn)}>Retake quiz</button>
+                {/* <Download /> */}
+                <button onClick={handleRetakeQuiz} className={classNames(s.btn)}>Retake quiz</button>
             </motion.div>
         </motion.div>
     );

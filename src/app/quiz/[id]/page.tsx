@@ -17,12 +17,15 @@ export default function QuizQuestionPage({ params }: { params: { id: string } })
     const router = useRouter()
 
     const back = () => {
-        const existingAnswersString = localStorage.getItem('quizAnswers');
-        const existingAnswers = existingAnswersString ? JSON.parse(existingAnswersString) : []
-        router.push((parseInt(id) - 1).toString())
-        existingAnswers.pop()
-        localStorage.setItem('quizAnswers', JSON.stringify(existingAnswers))
-        console.log(existingAnswers)
+        if (typeof window !== 'undefined') {
+
+            const existingAnswersString = localStorage.getItem('quizAnswers');
+            const existingAnswers = existingAnswersString ? JSON.parse(existingAnswersString) : []
+            router.push((parseInt(id) - 1).toString())
+            existingAnswers.pop()
+            localStorage.setItem('quizAnswers', JSON.stringify(existingAnswers))
+            console.log(existingAnswers)
+        }
     }
     useEffect(() => {
         dispatch(fetchData())

@@ -26,36 +26,39 @@ const Email = () => {
         control,
     });
     const onSubmit = (data: any) => {
-        const existingAnswersString = localStorage.getItem('quizAnswers');
-        const existingAnswers = existingAnswersString ? JSON.parse(existingAnswersString) : [];
-        const currentAnswer = {
-            order: existingAnswers.length + 1,
-            title: 'Email',
-            type: 'Email',
-            answer: data.Email,
-        };
+        if (typeof window !== 'undefined') {
+
+            const existingAnswersString = localStorage.getItem('quizAnswers');
+            const existingAnswers = existingAnswersString ? JSON.parse(existingAnswersString) : [];
+            const currentAnswer = {
+                order: existingAnswers.length + 1,
+                title: 'Email',
+                type: 'Email',
+                answer: data.Email,
+            };
 
 
-        const isDuplicate = existingAnswers.some((answer: any) => {
-            return (
-                answer.order === currentAnswer.order ||
-                answer.title === currentAnswer.title ||
-                answer.type === currentAnswer.type
-            );
-        });
+            const isDuplicate = existingAnswers.some((answer: any) => {
+                return (
+                    answer.order === currentAnswer.order ||
+                    answer.title === currentAnswer.title ||
+                    answer.type === currentAnswer.type
+                );
+            });
 
-        if (!isDuplicate) {
-            existingAnswers.push(currentAnswer);
+            if (!isDuplicate) {
+                existingAnswers.push(currentAnswer);
 
-            localStorage.setItem('quizAnswers', JSON.stringify(existingAnswers));
+                localStorage.setItem('quizAnswers', JSON.stringify(existingAnswers));
 
-        } else {
-            console.log('Этот ответ уже существует в localStorage.');
+            } else {
+                console.log('Этот ответ уже существует в localStorage.');
+            }
+            setTimeout(() => {
+
+                router.push('/result')
+            }, 500)
         }
-        setTimeout(() => {
-
-            router.push('/result')
-        }, 500)
     }
     const textAnimation = {
         hidden: {
