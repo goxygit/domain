@@ -1,24 +1,26 @@
 'use client'
 import { changeLanguage, variants_type } from "@/store/data-slice"
-import { useAppDispatch } from "@/store/store"
-import { useRouter } from "next/navigation"
 import s from '../main.module.scss'
 import classNames from "classnames"
 import { selectedElType } from "../main"
+import { motion } from "framer-motion"
+import { forwardRef } from "react"
 type propsType = {
     el: variants_type
-    i: number
     selectedIndices: selectedElType[]
     setSelectedIndices: any
-    handleChange: (text: string, func: (any: any) => void, select: selectedElType[]) => void
+    handleChange: any
 }
-export default ({ el, i, handleChange, selectedIndices, setSelectedIndices }: propsType) => {
+export const CheckboxType = forwardRef(({ el, handleChange, selectedIndices, setSelectedIndices }: propsType, ref) => {
     return (
         <li
-            onClick={() => handleChange(el.text, setSelectedIndices, selectedIndices)}
-            key={i} className={s.li_type_checkbox}>{el.text}
+            //@ts-ignore
+            ref={ref}
+            onClick={() => handleChange((el as variants_type).text, setSelectedIndices, selectedIndices)}
+            className={s.li_type_checkbox}>{(el as variants_type).text}
             <div>
-                <div className={classNames(s.input, { [s.checked_input]: selectedIndices.some(item => item.text === el.text) })}></div>
+                <div className={classNames(s.input, { [s.checked_input]: selectedIndices.some(item => item.text === (el as variants_type).text) })}></div>
             </div></li>
     )
-}
+})
+export const MCheckboxType = motion(CheckboxType)

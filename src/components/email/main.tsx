@@ -4,6 +4,7 @@ import s from './main.module.scss'
 import classNames from 'classnames';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
+import { motion } from 'framer-motion';
 const Email = () => {
     const router = useRouter()
 
@@ -56,12 +57,25 @@ const Email = () => {
             router.push('/result')
         }, 500)
     }
+    const textAnimation = {
+        hidden: {
+            x: -100,
+            opacity: 0
+        },
+        //@ts-ignore
+        visible: custom => ({
+            x: 0,
+            opacity: 1,
+            transition: { delay: custom * 0.2 }
+        })
+    }
     return (
-        <div className={s.email_block}>
-            <h1>Email</h1>
-            <p>Enter your email to get full access</p>
+        <motion.div initial='hidden' whileInView='visible' className={s.email_block}>
+            <motion.h1 variants={textAnimation} custom={1}>Email</motion.h1>
+            <motion.p variants={textAnimation} custom={2}>Enter your email to get full access</motion.p>
             <form onSubmit={handleSubmit(onSubmit)}>
-                <input
+                <motion.input
+                    variants={textAnimation} custom={3}
                     className={classNames({ [s.invalid]: !isValid && fieldState.isTouched })} placeholder='Your email' {...register('Email', {
                         required: "required",
                         pattern: {
@@ -72,10 +86,13 @@ const Email = () => {
                 <div>
                     {errors?.Email && errors?.Email?.message?.toString()}
                 </div>
-                <p>By continuing I agree with <a target="_blank" href='https://www.youtube.com/watch?v=mqw446NS7W8&ab_channel=Holdem'>Privacy policy</a> and <a target="_blank" href='https://www.youtube.com/watch?v=jfKfPfyJRdk&ab_channel=LofiGirl'>Terms of use</a></p>
+                <motion.p
+                    variants={textAnimation} custom={3}>
+                    By continuing I agree with <a target="_blank" href='https://www.youtube.com/watch?v=mqw446NS7W8&ab_channel=Holdem'>Privacy policy</a> and <a target="_blank" href='https://www.youtube.com/watch?v=jfKfPfyJRdk&ab_channel=LofiGirl'>Terms of use</a>
+                </motion.p>
                 <input type='submit' className={classNames(s.btn, { [s.btn_disabled]: !isValid })} value={'Next'} />
             </form>
-        </div>
+        </motion.div>
     );
 };
 

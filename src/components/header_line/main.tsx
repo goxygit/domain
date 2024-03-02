@@ -4,6 +4,7 @@ import s from './main.module.scss'
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/store/store';
+import { motion } from 'framer-motion';
 const HeaderLine = () => {
     const pathname = usePathname();
     const id = useParams().id
@@ -14,8 +15,20 @@ const HeaderLine = () => {
         return null;
     }
     const parsedId: number | null = id ? parseInt(id as string) : null;
+    const textAnimation = {
+        hidden: {
+            x: -100,
+            opacity: 0
+        },
+        //@ts-ignore
+        visible: custom => ({
+            x: 0,
+            opacity: 1,
+            transition: { delay: custom * 0.2 }
+        })
+    }
     return (
-        <div>
+        <motion.div initial='hidden' whileInView='visible' variants={textAnimation}>
             {loader ?
                 ''
                 :
@@ -28,7 +41,7 @@ const HeaderLine = () => {
                 </header>
             }
 
-        </div>
+        </motion.div>
 
     );
 };

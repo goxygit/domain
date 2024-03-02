@@ -6,15 +6,29 @@ import { useRouter } from 'next/navigation';
 import { useAppDispatch } from '@/store/store';
 import { changeLoader } from '@/store/data-slice';
 import Download from '../cvs/main';
+import { motion } from 'framer-motion';
 const Result = () => {
     const router = useRouter()
     const dispatch = useAppDispatch()
+    const textAnimation = {
+        hidden: {
+            x: -100,
+            opacity: 0
+        },
+        //@ts-ignore
+        visible: custom => ({
+            x: 0,
+            opacity: 1,
+            transition: { delay: custom * 0.2 }
+        })
+    }
+
     return (
-        <div className={s.container_result}>
-            <h1>Thanks you</h1>
-            <p>for supporting us and passing quiz</p>
-            <img src={ok.src} alt="" />
-            <div className={s.bottom_elements}>
+        <motion.div initial='hidden' whileInView='visible' className={s.container_result}>
+            <motion.h1 variants={textAnimation} custom={1}>Thanks you</motion.h1>
+            <motion.p variants={textAnimation} custom={2}>for supporting us and passing quiz</motion.p>
+            <motion.img variants={textAnimation} custom={3} src={ok.src} alt="" />
+            <motion.div variants={textAnimation} custom={4} className={s.bottom_elements}>
                 <Download />
                 <button onClick={() => {
                     localStorage.setItem('quizAnswers', '');
@@ -25,8 +39,8 @@ const Result = () => {
 
                     }, 500)
                 }} className={classNames(s.btn)}>Retake quiz</button>
-            </div>
-        </div>
+            </motion.div>
+        </motion.div>
     );
 };
 

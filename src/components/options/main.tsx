@@ -1,14 +1,16 @@
 'use client'
+import React from 'react'
 import { changeLanguage, changeLoader, questions_type, variants_type } from '@/store/data-slice'
 import s from './main.module.scss'
 import classNames from 'classnames'
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { useAppDispatch } from '@/store/store'
-import StringType from './components/string-type'
-import CheckboxType from './components/checkbox-type'
-import StringAndEmoji from './components/sting-and-emoji'
-import CircleType from './components/circle-type'
+import { MStringType } from './components/string-type'
+import { MStringAndEmoji } from './components/sting-and-emoji'
+import { MCheckboxType } from './components/checkbox-type'
+import { MCircleType } from './components/circle-type'
+import { motion } from 'framer-motion'
 type propsType = { progress: string, variants_of_questions: questions_type[] }
 export type selectedElType = {
     text: string
@@ -25,6 +27,7 @@ const Options = ({ progress, variants_of_questions }: propsType) => {
     const [selectedCircleIndices, setSelectedCircleIndices] = useState<selectedElType[]>([]);
     const router = useRouter()
     const dispatch = useAppDispatch()
+
     const type = variants_of_questions[parseInt(progress) - 1].type
     const variants = variants_of_questions[parseInt(progress) - 1]
 
@@ -33,6 +36,7 @@ const Options = ({ progress, variants_of_questions }: propsType) => {
         const existingAnswers = existingAnswersString ? JSON.parse(existingAnswersString) : []
         dispatch(changeLanguage(existingAnswers))
     }, [])
+
 
     const handleChange = (text: string, func: (any: any) => void, select: selectedElType[]) => {
         const selectedIndex = select.findIndex(item => item.text === text);
@@ -46,9 +50,8 @@ const Options = ({ progress, variants_of_questions }: propsType) => {
             };
             func([...select, selectedElement]);
         }
-
-
     };
+
     const setAnswer = (el: variants_type | variants_type[]) => {
         console.log(el)
         const currentAnswer: answerType = {
@@ -62,9 +65,8 @@ const Options = ({ progress, variants_of_questions }: propsType) => {
 
         const isDuplicate = existingAnswers.some((answer: any) => {
             return (
-                answer.order === currentAnswer.order &&
-                answer.title === currentAnswer.title &&
-                answer.type === currentAnswer.type
+                answer.order === currentAnswer.order ||
+                answer.title === currentAnswer.title
             );
         });
 
@@ -79,9 +81,21 @@ const Options = ({ progress, variants_of_questions }: propsType) => {
         }
         console.log(localStorage.getItem('quizAnswers'))
     }
+    const textAnimation = {
+        hidden: {
+            x: -100,
+            opacity: 0
+        },
+        //@ts-ignore
+        visible: custom => ({
+            x: 0,
+            opacity: 1,
+            transition: { delay: custom * 0.2 }
+        })
+    }
     return (
-        <div className={s.container}>
-            <ul className={classNames(
+        <motion.div initial='hidden' whileInView='visible' className={s.container}>
+            <motion.ul variants={textAnimation} className={classNames(
                 { [s.options_block_type_string]: type === "string" || type === "checkbox" },
                 { [s.options_block_type_string_and_emoji]: type === "string_and_emoji" },
                 { [s.options_block_type_circle]: type === "circle" },
@@ -89,29 +103,35 @@ const Options = ({ progress, variants_of_questions }: propsType) => {
             >
                 {variants.variants.map((el, i) => (
                     type === "string" ?
-                        <StringType setAnswer={setAnswer} el={el as variants_type} progress={progress} i={i} />
+                        <React.Fragment key={i}>
+                            <MStringType variants={textAnimation} custom={i} setAnswer={setAnswer} el={el as variants_type} progress={progress} />
+
+                        </React.Fragment>
                         : type === "string_and_emoji" ?
-                            <StringAndEmoji setAnswer={setAnswer} el={el as variants_type} progress={progress} i={i} />
-                            :
+                            <React.Fragment key={i}>
+                                <MStringAndEmoji custom={i} variants={textAnimation} setAnswer={setAnswer} el={el as variants_type} progress={progress} />
+
+                            </React.Fragment> :
                             type === "checkbox" ?
-                                <CheckboxType handleChange={handleChange} i={i} el={el as variants_type} selectedIndices={selectedIndices} setSelectedIndices={selectedCircleIndices} />
+                                <React.Fragment key={i}>
+                                    <MCheckboxType custom={i} variants={textAnimation} el={(el as variants_type)} selectedIndices={selectedIndices} setSelectedIndices={setSelectedIndices} handleChange={handleChange} />
+
+                                </React.Fragment>
                                 : type === "circle" ?
                                     <div key={i} className={s.circle_block}>
                                         {(el as variants_type[]).map((el, id) => (
-                                            <CircleType
-                                                handleChange={handleChange}
-                                                i={i} el={el as variants_type}
-                                                selectedCircleIndices={selectedCircleIndices}
-                                                setSelectedCircleIndices={setSelectedCircleIndices} />
-
+                                            <React.Fragment key={id}>
+                                                <MCircleType variants={textAnimation} custom={id} el={el} handleChange={handleChange} selectedCircleIndices={selectedCircleIndices} setSelectedCircleIndices={setSelectedCircleIndices} />
+                                            </React.Fragment>
                                         ))}
                                     </div>
+
                                     :
                                     ""
                 ))
                 }
 
-            </ul>
+            </motion.ul>
             {
                 (type === "checkbox") &&
 
@@ -122,13 +142,14 @@ const Options = ({ progress, variants_of_questions }: propsType) => {
             }
             {
                 type === "circle" &&
-                <button onClick={() => {
-                    setAnswer(selectedCircleIndices)
-                    dispatch(changeLoader(true))
+                <button
+                    onClick={() => {
+                        setAnswer(selectedCircleIndices)
+                        dispatch(changeLoader(true))
 
-                }} disabled={selectedCircleIndices.length === 0} className={classNames(s.btn, { [s.btn_disabled]: selectedCircleIndices.length === 0 })}>Next</button>
+                    }} disabled={selectedCircleIndices.length === 0} className={classNames(s.btn, { [s.btn_disabled]: selectedCircleIndices.length === 0 })}>Next</button>
             }
-        </div >
+        </motion.div >
 
     )
 }

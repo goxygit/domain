@@ -13,8 +13,8 @@ const Download = () => {
 
 
     // Создаем массив данных для CSV
-    let htmlContent = '<style>table {border-collapse: collapse;} th, td {border: 1px solid black; padding: 8px;}</style>';
-    htmlContent += '<table><tr><th>Order</th><th>Title</th><th>Type</th><th>Answer</th></tr>';
+    let htmlContent = '<style>table {border-collapse: collapse; font-family: sans-serif;} th, td {border: 0.5px solid gray; padding: 8px;} th{background-color:lightgray}</style>';
+    htmlContent += '<table><tr><th><b>Order</b></th><th><b>Title</b></th><th><b>Type</b></th><th><b>Answer</b></th></tr>';
 
     data.forEach((item: any) => {
       let answer = item.answer;
@@ -24,7 +24,7 @@ const Download = () => {
         answer = `${answer}`;
       }
 
-      htmlContent += `<tr><td>${item.order}</td><td>${item.title}</td><td>${item.type}</td><td>${answer}</td></tr>`;
+      htmlContent += `<tr><th><b>${item.order}</b></th><td>${item.title}</td><td>${item.type}</td><td>${answer}</td></tr>`;
     });
 
     htmlContent += '</table>';

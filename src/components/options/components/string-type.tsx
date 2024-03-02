@@ -3,17 +3,20 @@ import { changeLanguage, variants_type } from "@/store/data-slice"
 import { useAppDispatch } from "@/store/store"
 import { useRouter } from "next/navigation"
 import s from '../main.module.scss'
+import { forwardRef } from "react"
+import { motion } from "framer-motion"
 type propsType = {
     el: variants_type
     progress: string
-    i: number
     setAnswer: (el: variants_type) => void
 }
-export default ({ el, setAnswer, i, progress }: propsType) => {
+export const StringType = forwardRef(({ el, setAnswer, progress }: propsType, ref) => {
     const router = useRouter()
     const dispatch = useAppDispatch()
     return (
         <li
+            //@ts-ignore
+            ref={ref}
             onClick={() => {
                 setAnswer(el)
                 if (parseInt(progress) === 1) {
@@ -21,6 +24,7 @@ export default ({ el, setAnswer, i, progress }: propsType) => {
                 }
                 router.push(`/quiz/${parseInt(progress) + 1}`)
             }}
-            key={i} className={s.li_type_text}>{el.text}</li>
+            className={s.li_type_text}>{el.text}</li>
     )
-}
+})
+export const MStringType = motion(StringType)

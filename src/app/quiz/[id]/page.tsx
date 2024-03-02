@@ -38,11 +38,7 @@ export default function QuizQuestionPage({ params }: { params: { id: string } })
 
     }, [language])
     const id = params.id
-    // Здесь вы можете получить данные о вопросе с questionId 
-    // или загрузить их из вашего источника данных
 
-    const handleNextQuestion = () => {
-    };
 
     return (
         <div className={classNames({ [s.container]: loader })}>

@@ -40,12 +40,12 @@
 ::-webkit-scrollbar {
   height: 6px;
   /* Ширина полосы прокрутки */
-  scrollbar-color: #ccc #f1f1f1;
+  scrollbar-color: #0000004b #f1f1f1;
 }
 
 /* Стилизация ползунка */
 ::-webkit-scrollbar-thumb {
-  background-color: #ccc;
+  background-color: #0000006e;
   /* Цвет ползунка */
   border-radius: 4px;
   /* Скругление углов ползунка */
@@ -54,4 +54,11 @@
 /* Стилизация трека (основания ползунка) */
 ::-webkit-scrollbar-track {
   opacity: 0;
+}
+
+@media (min-width:768px) {
+  .main {
+    max-width: 700px;
+    text-align: center;
+  }
 }
