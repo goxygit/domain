@@ -1,16 +1,14 @@
 'use client'
 import React from 'react';
-import { answerType } from '../options/main';
 import download from '@/assets/img/download.png'
-import s from './main.module.scss'
-import Papa from 'papaparse';
 
 const Download = () => {
   // Получаем данные из localStorage
 
-  const existingAnswersString = localStorage.getItem('quizAnswers');
-  const data = existingAnswersString ? JSON.parse(existingAnswersString) : []
+
   const handleDownload = () => {
+    const existingAnswersString = localStorage.getItem('quizAnswers');
+    const data = existingAnswersString ? JSON.parse(existingAnswersString) : []
     let htmlContent = '<style>table {border-collapse: collapse; font-family: sans-serif;} th, td {border: 0.5px solid gray; padding: 8px;} th{background-color:lightgray}</style>';
     htmlContent += '<table><tr><th><b>Order</b></th><th><b>Title</b></th><th><b>Type</b></th><th><b>Answer</b></th></tr>';
 
